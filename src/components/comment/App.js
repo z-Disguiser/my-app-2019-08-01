@@ -27,8 +27,8 @@ export default class App extends Component{
 
     }
     delete(index){
-        let {comments} = this.state
-        comments.splice(index,1)
+        let {comments} = this.state;
+        comments.splice(index,1);
         this.setState({
             comments
         })

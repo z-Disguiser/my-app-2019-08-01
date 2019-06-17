@@ -8,7 +8,9 @@ export default class Right extends Component{
             <div className="right">
                 <h3>评论回复：</h3>
                 <ul>
-                    <RightItem comments={this.props.comments} delete={this.props.delete}/>
+                    {this.props.comments.map((comment,index)=>{
+                        return <RightItem comment={comment} key ={index} index={index} delete={this.props.delete}/>
+                    })}
                 </ul>
             </div>
         )

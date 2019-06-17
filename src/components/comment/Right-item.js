@@ -7,21 +7,21 @@ export default class RightItem extends Component{
     }
 
     handleClick(e){
-        this.props.delete(e.target.key)
+        let{comment} = this.props;
+        if(window.confirm(`确定删除${comment.name}的评论吗？`)){
+            this.props.delete(e.target.index)
+        }
     }
     render() {
-        let {comments} = this.props;
+        let {comment,index} = this.props;
         return(
-            comments.map((item,index)=>{
-                return <li key={index}>
-                    <div className="table-bordered">
-                        <h4>{item.name}说：</h4>
-                        <p>{item.content}</p>
-                        <button className="btn btn-default" key={index} onClick={this.handleClick}>删除</button>
-                    </div>
-                </li>
-                })
-
+            <li>
+                <div className="table-bordered">
+                    <h4>{comment.name}说：</h4>
+                    <p>{comment.content}</p>
+                    <button className="btn btn-default" key={index} onClick={this.handleClick}>删除</button>
+                </div>
+            </li>
         )
     }
 }
