@@ -1,5 +1,4 @@
 import React,{Component} from "react"
-import axiox from 'axios'
 
 
 import Left from './Left'
@@ -14,14 +13,6 @@ export default class App extends Component{
         }
         this.add = this.add.bind(this)
         this.delete = this.delete.bind(this)
-    }
-    componentDidMount() {
-        axiox.get('/api/cook/query?key=7372903ce6b8675f86618a5dce75277a&menu=%E8%A5%BF%E7%BA%A2%E6%9F%BF&rn=5&pn=3')
-            .then(res=>{
-                let result = res.data
-                console.log(result)
-            })
-
     }
 
     add(name,content){
