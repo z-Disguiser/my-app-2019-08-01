@@ -1,0 +1,24 @@
+#Steps{
+    background-color: gray;
+    font-family: 楷体;
+    font-weight: bold;
+}
+#Steps .ant-steps{
+    padding: 80px;
+}
+#Steps input,#Steps textarea{
+    border: 1px solid #d9d9d9;
+    border-radius: 4px;
+}
+#Steps .steps-content{
+    margin: 0 100px;
+    height: 100px;
+}
+#Steps .steps-content div{
+    width: 100%;
+    text-align: center;
+}
+#Steps .steps-Button{
+    margin: 20px 100px;
+    text-align: center;
+}

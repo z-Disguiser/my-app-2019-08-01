@@ -43,7 +43,7 @@ export default class Left extends Component{
                 </div>
                 <div className="form-group">
                     <label>详细内容</label>
-                    <textarea placeholder="评论内容" className="form-control" rows="5" value={content} onChange={this.change2}></textarea>
+                    <textarea style={{resize:'none'}} placeholder="评论内容" className="form-control" rows="5" value={content} onChange={this.change2}></textarea>
                     <button className="btn btn-default" onClick={this.add}>提交</button>
                 </div>
             </div>
