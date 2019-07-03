@@ -9,6 +9,7 @@ import Home from './Home'
 import Axios from '../axios/Axios'
 import Steps from '../steps/Steps'
 import Modify from '../modify/Modify'
+import Sign from '../sign/Sign'
 import './router.css'
 
 export default class Routes extends Component{
@@ -22,6 +23,7 @@ export default class Routes extends Component{
                     <Menu.Item><Link to='/axios'>axios</Link></Menu.Item>
                     <Menu.Item><Link to="/steps">steps</Link></Menu.Item>
                     <Menu.Item><Link to='/modify'/>modify</Menu.Item>
+                    <Menu.Item><Link to='/sign'/>sign</Menu.Item>
                 </Menu>
                 <Switch>
                     <Route path='/app' component={App}/>
@@ -30,6 +32,7 @@ export default class Routes extends Component{
                     <Route path='/axios' component={Axios}/>
                     <Route path='/steps' component={Steps}/>
                     <Route path='/modify' component={Modify}/>
+                    <Route path='/sign' component={Sign}/>
                     <Redirect to='/app'/>
                 </Switch>
             </Router>

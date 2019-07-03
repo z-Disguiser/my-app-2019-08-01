@@ -13,6 +13,7 @@ export default class  Modify extends React.Component{
             title:['姓名','年龄','电话号码','籍贯','身高','体重'],
             visible1:false,
             visible2:false,
+            visible3:false,
             type:0,
             dex:null,
             newData:{}
@@ -21,8 +22,8 @@ export default class  Modify extends React.Component{
     onClose=()=>{
         this.setState({visible1:false,newData:{}})
     };
-    renderDrawer=(type)=> {
-        let {visible1,visible2,information,dex,title} = this.state;
+    renderDrawer=()=> {
+        let {visible1,visible2,visible3,information,dex,title,type} = this.state;
         if(type===1){
             return(<Drawer visible={visible1} onClose={this.onClose} width={300}>
                 <Form labelAlign="left" layout='vertical'>
@@ -34,13 +35,22 @@ export default class  Modify extends React.Component{
                 </Form>
             </Drawer>)
         }else if(type===2){
-            return(<Drawer visible={visible2} onClose={()=>{this.setState({visible2:false,newData:null})}} width={300}>
+            return(<Drawer visible={visible2} onClose={()=>{this.setState({visible2:false,newData:{}})}} width={300}>
                 <Card title='个人信息' bordered={false} style={{width:300}}>
-                    {Object.values(information[dex]).map((item,index)=>{
+                    {Object.keys(information[dex]).map((item,index)=>{
                         return <p key={index}>{title[index]}------------------{item}</p>
                     })}
                 </Card>
             </Drawer>)
+        } else if(type===3){
+            return(<Drawer visible={visible3} onClose={()=>this.setState({visible3:false})}>
+                <Form>
+                    {Object.keys(information[0]).map((item,index)=>{
+                        return this.renderChange(item,index)
+                    })}
+                </Form>
+                <Button type='primary'>保存</Button>
+                </Drawer>)
         }
     };
     modify=(dex)=>{
@@ -63,9 +73,15 @@ export default class  Modify extends React.Component{
         this.setState({information});
         message.success(`删除${information[index].name}的信息成功！`)
     };
+    add=()=>{
+        this.setState({
+            type:3,
+            visible3:true
+        })
+    };
     renderChange=(key,index)=>{
         let {newData,title} = this.state;
-        return <Form.Item key={index} label={title[index]} htmlFor={key}><Input onChange={(e)=>this.setState({newData:Object.assign(newData,{[key]:e.target.value})})} value={newData[key]}/></Form.Item>
+        return <Form.Item key={index} label={title[index]} htmlFor={key}><Input onChange={(e)=>this.setState({newData:Object.assign({},newData,{[key]:e.target.value})})} value={newData[key]}/></Form.Item>
     };
     save=()=>{
         let{information,newData,dex} = this.state;
@@ -73,31 +89,31 @@ export default class  Modify extends React.Component{
         this.setState({information,newData:{},visible1:false,visible2:false})
     };
     render() {
-        const {information,type,dex} = this.state;
-        console.log(information);
-        console.log(this.state.newData);
+        const {information,type} = this.state;
+        console.log(type,this.state.visible2);
         return(
             <div>
                 <List
                     header={<p style={{fontFamily:'楷体',fontWeight:'900',fontSize:'24px',textAlign:'center'}}>个人信息</p>}
+                    footer={<Button onClick={()=>this.add()} type='primary'>添加</Button>}
                     style={{width:'500px',margin:'50px auto'}}
                 >
                     {information.map((item,index)=>{
                         const {name} = item;
                         return (<List.Item key={index} style={{display:'relative'}}>
                             姓名：{name}
-                            <Button onClick={()=>this.modify(index)} type='primary' style={{textAlign:'right',position:'absolute',right:'20px'}}>修改</Button>
-                            <Button onClick={()=>this.query(index)} type='primary' style={{textAlign:'right',position:'absolute',right:'100px'}}>查询</Button>
+                            <Button onClick={()=>this.modify(index)} type='primary' style={{textAlign:'right',marginLeft:'100px'}}>修改</Button>
+                            <Button onClick={()=>this.query(index)} type='primary' style={{textAlign:'right'}}>查询</Button>
                             <Popconfirm title={'确定要删除这条信息吗？'}
                             onConfirm={()=>this.delete(index)}
                             onCancel={()=>message.error(`删除${information[index].name}的信息失败！`)}
                             >
-                                <Button type='primary' style={{textAlign:'right',position:'absolute',right:'-60px'}}>删除</Button>
+                                <Button type='primary' style={{textAlign:'right'}}>删除</Button>
                             </Popconfirm>
                         </List.Item>)
                     })}
                 </List>
-                {this.renderDrawer(type,dex)}
+                {this.renderDrawer()}
             </div>)
     }
 }
