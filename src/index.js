@@ -1,10 +1,10 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import 'antd/dist/antd.css';
-import Routes from './components/router/Router'
+import Head from './components/head/Head'
 
 
-ReactDOM.render(<Routes/>, document.getElementById('root'));
+ReactDOM.render(<Head/>, document.getElementById('root'));
 
 // If you want your app to work offline and load faster, you can change
 // unregister() to register() below. Note this comes with some pitfalls.

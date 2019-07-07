@@ -1,0 +1,4 @@
+.ant-menu-item > a::before{
+    content:none
+}
+
