@@ -1,18 +1,117 @@
 import React from 'react'
-import {Badge, Card, Icon,Layout,Breadcrumb} from "antd";
-const {Content} = Layout;
+import {Badge, Card, Icon, Layout,Breadcrumb} from "antd";
+import echarts from "echarts";
 
-export default class Body extends React.Component{
+const {Content} =Layout;
+export  default class Body extends React.Component{
     constructor(props){
         super(props);
-        this.state ={
+        this.state={
             issmall:true,
+        };
+    }
+    componentDidMount() {
+        let echarts1 = echarts.init(document.getElementById('echarts1'),'light');
+        let echarts2 = echarts.init(document.getElementById('echarts2'),'light');
+        let echarts3 = echarts.init(document.getElementById('echarts3'),'light');
+        let echarts4 = echarts.init(document.getElementById('echarts4'),'light');
+
+
+        echarts1.setOption({
+            title:{
+                text:'销售额分布',
+                top:'5%'
+            },
+            legend:{
+                type:'plain',
+                bottom:10
+            },
+            tooltip:{},
+            xAxis:{
+                data:['Jan.','Feb.','Mar.','Apr.','May.','Jun.','Jul.','Aug.']
+            },
+            yAxis:{},
+            series:[{
+                name:'London',
+                type:'bar',
+                data:[8,15,2,5,27,15,4,59]
+            },{
+                name:'Berlin',
+                type:'bar',
+                data:[58,21,8,29,95,99,29,57],
+                smooth:true
+            }],
+        });
+        echarts2.setOption({
+            legend:{
+                type:'plain',
+                bottom:10
+            },
+            xAxis:{
+                data:['Jan.','Feb.','Mar.','Apr.','May.','Jun.','Jul.','Aug.']
+            },
+            yAxis:{},
+            series:[{
+                name:'Tokyo',
+                type:'line',
+                data:[8,15,2,5,27,15,4,59],
+            },{
+                name:'LonDon',
+                type:'line',
+                data:[58,21,8,29,95,99,29,57]
+            }],
+        });
+        echarts3.setOption({
+            /*legend:{
+                orient:'vertical',
+                x:'left',
+                y:'center',
+                textStyle:{
+                    color:'red',
+                },
+                itemWidth:'50px',
+                itemHeight:'200px',
+                backgroundColor:"black",
+                data:['Jan.','Feb.','Mar.','Apr.','May.','Jun.','Jul.','Aug.'],
+            },*/
+            series:[{
+                name:'Tokyo',
+                type:'pie',
+                radius: ['25%', '45%'],
+                hoverAnimation:true,
+                data:[
+                    {value:40,name:'事例1：40%',label:'Q'},
+                    {value:21,name:'事例2：21%',label:'Q'},
+                    {value:17,name:'事例3：17%',label:'Q'},
+                    {value:13,name:'事例4：13%',label:'Q'},
+                    {value:9,name:'事例5：9%',label:'Q'},
+                ],
+            }],
+        });
+        echarts4.setOption({
+            tooltip:{},
+            xAxis:{
+                data:[{value:'1951年'},{value:'1952年'},{value:'1956年'},{value:'1957年'},{value:'1958年'}]
+            },
+            yAxis:{},
+            series:[{
+                name:'London',
+                type:'bar',
+                data:[98,3,86,56,27]
+            }]
+        });
+        window.onresize = function () {
+            echarts1.resize();
+            echarts2.resize();
+            echarts3.resize();
+            echarts4.resize();
         }
+
     }
     isSmall=()=>{
         this.setState({
             issmall:!this.state.issmall
-        })
+        });
     };
     render() {
         return(
@@ -57,7 +156,7 @@ export default class Body extends React.Component{
                     </div>
                 </div>
                 <div style={{width:'100%',padding:'24px 24px 0'}}>
-                    <Card style={{boxShadow:'3px 5px 3px rgba(0,0,255,.2)'}} headStyle={{color:'#666666',backgroundColor:'#fafafa',padding:'0 8px',fontSize:'13px'}} bodyStyle={{padding:'0 8px',position:'relative'}} title={
+                    <Card style={{width:'100%',boxShadow:'3px 5px 3px rgba(0,0,255,.2)'}} headStyle={{color:'#666666',backgroundColor:'#fafafa',padding:'0 8px',fontSize:'13px'}} bodyStyle={{padding:'0 8px',position:'relative'}} title={
                         <div style={{boxShadow:'3px,3px,3px,rgba(0,0,255,.2)',verticalAlign:'middle',display:'flex',justifyContent:'start'}}>
                             <span>数据面板组件</span>
                             <span style={{position:'absolute',right:'10px',display:'flex',justifyContent:'space-between',width:"120px"}}>
@@ -123,7 +222,7 @@ export default class Body extends React.Component{
                                     </span>
                         </div>
                     }>
-                        <div id='echarts2' style={{width:'320px',height:'260px'}}>
+                        <div id='echarts2' style={{width:'90%',height:'260px'}}>
 
                         </div>
                     </Card>
@@ -138,7 +237,7 @@ export default class Body extends React.Component{
                                     </span>
                         </div>
                     }>
-                        <div id='echarts3' style={{width:'320px',height:'260px'}}>
+                        <div id='echarts3' style={{width:'95%',height:'260px'}}>
 
                         </div>
                     </Card>
@@ -153,7 +252,7 @@ export default class Body extends React.Component{
                                     </span>
                         </div>
                     }>
-                        <div id='echarts4' style={{width:'340px',height:'260px'}}>
+                        <div id='echarts4' style={{width:'90%',height:'260px'}}>
 
                         </div>
                     </Card>

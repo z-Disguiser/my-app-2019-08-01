@@ -1,6 +1,5 @@
 import React,{Component} from "react"
-import {Switch,Link,Route,Redirect,BrowserRouter as Router} from "react-router-dom";
-import { Menu } from "antd";
+import {Switch,Route,Redirect} from "react-router-dom";
 /*import {Tab,Tabs} from "react-bootstrap";*/
 
 import App from '../comment/App'
@@ -10,13 +9,13 @@ import Axios from '../axios/Axios'
 import Steps from '../steps/Steps'
 import Modify from '../modify/Modify'
 import Sign from '../sign/Sign'
-import Head from '../head/Head'
+import Body from '../head/Body'
+import Todo from '../redux-todo/Todo'
 import './router.css'
 
 export default class Routes extends Component{
     render() {
         return(
-            <Router>
                 <Switch>
                     <Route path='/app' component={App}/>
                     <Route path='/about' component={About}/>
@@ -25,14 +24,15 @@ export default class Routes extends Component{
                     <Route path='/steps' component={Steps}/>
                     <Route path='/modify' component={Modify}/>
                     <Route path='/sign' component={Sign}/>
-
+                    <Route path='/body' component={Body}/>
+                    <Route path='/todo' component={Todo}/>
+                    <Redirect to='/app'/>
                 </Switch>
-            </Router>
         )
     }
 }
-{/*
-<Menu mode='horizontal' style={{width:'100%', backgroundColor:'rgba(255,255,255,0.6)'}}>
+
+/*<Menu mode='horizontal' style={{width:'100%', backgroundColor:'rgba(255,255,255,0.6)'}}>
     <Menu.Item><Link to='/app'>app</Link></Menu.Item>
     <Menu.Item><Link to='/about'>about</Link></Menu.Item>
     <Menu.Item><Link to='/home'>home</Link></Menu.Item>
@@ -41,4 +41,4 @@ export default class Routes extends Component{
     <Menu.Item><Link to='/modify'>modify</Link></Menu.Item>
     <Menu.Item><Link to='/sign'>sign</Link></Menu.Item>
     <Menu.Item><Link to='/head'>head</Link></Menu.Item>
-</Menu>*/}
+</Menu>*/

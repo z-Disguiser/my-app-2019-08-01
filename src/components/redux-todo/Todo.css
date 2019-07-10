@@ -1,0 +1,13 @@
+#Todo{
+    width: 100%;
+    background-color: #f6f6f6;
+}
+#Todo>.Todo-Top{
+    text-align: center;
+    height: 50px;
+    width: 100%;
+}
+#Todo>.Todo-Body{
+    width: 60%;
+    margin: 30px auto;
+}
