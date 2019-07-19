@@ -14,6 +14,9 @@ export default class Todo extends React.Component{
     // handleStoreChange = ()=>{
     //   this.setState(store.getState())
     // };
+    empty = () => {
+      this.setState({inputValue:""});
+    };
 
     handleInputChang=(e)=>{
       const action = {
@@ -28,15 +31,26 @@ export default class Todo extends React.Component{
             text:this.state.inputValue,
         };
         store.dispatch(action);
+        this.empty();
     };
     handleDelete = (index)=>{
       const action ={
           type:"Delete_List",
           index:index
       } ;
-      store.dispatch(action)
+      store.dispatch(action);
+      this.empty();
+    };
+    handleModify = (index)=>{
+        const action = {
+            type:"Change_List",
+            index:index,
+        };
+        store.dispatch(action);
+        this.empty();
     };
     render() {
+        console.log(this.state);
         return(
             <div id="Todo">
                 <div className="Todo-Top">
@@ -53,7 +67,7 @@ export default class Todo extends React.Component{
                             {item}
                             <span>
                                 <Button onClick={()=>this.handleDelete(index)}>删除</Button>
-                                <Button>修改</Button>
+                                <Button onClick={()=>this.handleModify(index)}>修改</Button>
                             </span>
                         </List.Item>)
                     }}

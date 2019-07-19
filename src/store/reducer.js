@@ -1,5 +1,5 @@
 const defaultState = {
-  inputValue:"123",
+  inputValue:"",
   List:[]
 };
 
@@ -15,6 +15,10 @@ export default (state = defaultState,action)=>{
     }else if(action.type==="Delete_List"){
         const newState = JSON.parse(JSON.stringify(state));
         newState.List.splice(action.index,1);
+        return newState;
+    }else if(action.type==="Change_List"){
+        const newState = JSON.parse(JSON.stringify(state));
+        newState.List.splice(action.index,1,state.inputValue);
         return newState;
     }
     return state

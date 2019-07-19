@@ -5,7 +5,7 @@ import {Layout, Icon, Menu, Input, Avatar, Badge} from "antd";
 
 import Routes from '../router/Router'
 import './head.css'
-const { Header, Sider } = Layout;
+const { Header, Sider ,Content} = Layout;
 const {SubMenu} = Menu;
 export default class Head extends React.Component{
     constructor(props){
@@ -34,9 +34,8 @@ export default class Head extends React.Component{
     };
     render() {
         return (
-            <div id='head'>
             <Layout  style={{fontFamily:'Monospace Number',top:'0',bottom:'0',width:'100%'}}>
-                <Sider style={{height:'100%',position:'absolute'}} collapsed={this.state.collapsed} breakpoint="lg" trigger={null} onBreakpoint={()=>this.setState({collapsed:!this.state.collapsed})} collapsedWidth="80" collapsible >
+                <Sider style={{height:'100%',minHeight:"100vh"}} collapsed={this.state.collapsed} breakpoint="lg" trigger={null} onBreakpoint={()=>this.setState({collapsed:!this.state.collapsed})} collapsedWidth="80" collapsible >
                     <Menu mode='inline' defaultSelectedKeys={['1']} theme='dark'>
                         <Menu.Item key='100' style={{backgroundColor:'#4a89dc',height:'64px',padding:'0',margin:'0'}}>
                             <span style={{display:this.state.collapsed?'none':'inline-block',lineHeight:'64px',fontSize:'17px',color:"white",marginRight:'10px'}}>
@@ -112,21 +111,22 @@ export default class Head extends React.Component{
                         </SubMenu>
                     </Menu>
                 </Sider>
-                <Layout>
-                    <Header style={{backgroundColor:'#4a89dc',padding:'0 15px 0',color:'white',position:'relative'}}>
-                        <Icon type='contacts' style={{fontSize:'20px',lineHeight:'60px'}}/>
-                        <Icon type='car' style={{fontSize:'20px',margin:'0 30px',lineHeight:'60px'}}/>
-                        <Icon type={this.state.isfull?'fullscreen-exit':'fullscreen'} onClick={this.full} style={{fontSize:'20px',lineHeight:"60px"}}/>
-                        <Input type='text' placeholder='全文检索' style={{width:'150px',marginLeft:'30px',borderRadius:'20px'}}/>
-                        <span style={{position:'absolute',right:'0'}}>
+              <Layout>
+                <Header style={{backgroundColor:'#4a89dc',padding:'0 15px 0',color:'white',position:'relative',width:"100%"}}>
+                  <Icon type='contacts' style={{fontSize:'20px',lineHeight:'60px'}}/>
+                  <Icon type='car' style={{fontSize:'20px',margin:'0 30px',lineHeight:'60px'}}/>
+                  <Icon type={this.state.isfull?'fullscreen-exit':'fullscreen'} onClick={this.full} style={{fontSize:'20px',lineHeight:"60px"}}/>
+                  <Input type='text' placeholder='全文检索' style={{width:'150px',marginLeft:'30px',borderRadius:'20px'}}/>
+                  <span style={{position:'absolute',right:'0'}}>
                             <Icon style={{margin:'0 20px',fontSize:'20px'}} type='api'/>
                             <Icon style={{margin:'0 20px',fontSize:'20px'}}  type='camera'/>
                             <Badge dot style={{margin:'0 20px'}}><Avatar icon='user' style={{margin:'0 20px'}}/></Badge>
                         </span>
-                    </Header>
-                    <Routes/>
-                </Layout>
+                </Header>
+                <Routes/>
+              </Layout>
+
             </Layout>
-        </div>)
+  )
     }
 }
