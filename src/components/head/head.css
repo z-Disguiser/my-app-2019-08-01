@@ -1,4 +1,8 @@
 .ant-menu-item > a::before{
     content:none
 }
-
+.Layout-sider::-webkit-scrollbar{
+    height: 100vh;
+    overflow: auto;
+    display: none;
+}

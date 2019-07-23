@@ -1,0 +1,7 @@
+.Layout-sider-layout-content{
+    overflow: auto;
+}
+/*隐藏滚动条*/
+.Layout-sider-layout-content::-webkit-scrollbar{
+    display: none;
+}

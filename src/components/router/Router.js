@@ -11,6 +11,7 @@ import Modify from '../modify/Modify'
 import Sign from '../sign/Sign'
 import Body from '../head/Body'
 import Todo from '../redux-todo/Todo'
+import Pagination from '../pagination/Pagination'
 import './router.css'
 
 export default class Routes extends Component{
@@ -26,6 +27,7 @@ export default class Routes extends Component{
                     <Route path='/sign' component={Sign}/>
                     <Route path='/body' component={Body}/>
                     <Route path='/todo' component={Todo}/>
+                    <Route path='/pagination' component={Pagination}/>
                     <Redirect to='/app'/>
                 </Switch>
         )
