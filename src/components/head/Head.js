@@ -67,7 +67,7 @@ export default class Head extends React.Component{
                                 <Menu.Item key='10'><Link to='/todo'>Redux-Todo</Link></Menu.Item>
                             </SubMenu>
                           <Menu.Item key='11'><Link to='/pagination'>Pagination</Link></Menu.Item>
-                            <Menu.Item key='12'>Banner管理</Menu.Item>
+                          <Menu.Item key='12'><Link to='/Generator'>Generator</Link></Menu.Item>
                         </SubMenu>
                         <SubMenu key='sub3' title={
                             <span>
@@ -75,7 +75,7 @@ export default class Head extends React.Component{
                                 <span>UI元素</span>
                             </span>
                         }>
-                            <Menu.Item key='13'>按钮</Menu.Item>
+                          <Menu.Item key='13'><Link to='/TableTest'>TableTest</Link></Menu.Item>
                             <Menu.Item key='14'>消息</Menu.Item>
                             <Menu.Item key='15'>动画</Menu.Item>
                             <Menu.Item key='16'>图标</Menu.Item>

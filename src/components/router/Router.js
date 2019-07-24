@@ -12,6 +12,8 @@ import Sign from '../sign/Sign'
 import Body from '../head/Body'
 import Todo from '../redux-todo/Todo'
 import Pagination from '../pagination/Pagination'
+import {Generator} from '../Generator/Generator'
+import TableTest from '../Test/Test'
 import './router.css'
 
 export default class Routes extends Component{
@@ -28,7 +30,9 @@ export default class Routes extends Component{
                     <Route path='/body' component={Body}/>
                     <Route path='/todo' component={Todo}/>
                     <Route path='/pagination' component={Pagination}/>
-                    <Redirect to='/app'/>
+                    <Route path="/Generator" component={Generator}/>
+                    <Route path="/TableTest" component={TableTest}/>
+                    <Redirect to='/body'/>
                 </Switch>
         )
     }

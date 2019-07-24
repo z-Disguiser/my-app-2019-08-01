@@ -1,0 +1,47 @@
+#Test{
+    width: 100%;
+}
+#Test .Test-Top{
+    background-color: #fff;
+    margin: 0 auto;
+    padding: 0 1%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+#Test .Test-Top-Right button{
+    background-color: #1e3159;
+    color: #FFFFFF;
+}
+.ant-input{
+    width: auto;
+}
+#Test .Test-Top .ant-input{
+    margin: 0 10px;
+    width: 200px;
+}
+#Test .Test-body{
+    margin: 10px auto;
+    width: 98%;
+    background-color: #fff;
+}
+#Test .Test-body-form{
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+#Test .Test-body-form-select{
+    width: 100px;
+}
+#Test .Test-body-form button:nth-of-type(2){
+    color: #FFFFFF;
+    background-color: #37bbd0;
+    margin-left: 10px;
+}
+#Test .Test-body-table td,#Test .Test-body-table th{
+    text-align: center;
+}
+#Test .Test-body-table-operate a{
+    color: #31bfc9;
+    margin-left: 15px;
+}
