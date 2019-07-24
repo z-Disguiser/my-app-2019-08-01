@@ -1,4 +1,4 @@
-import React,{useState} from 'react'
+import React from 'react'
 import {Typography,Input,Button,Select,Table,Badge,Form} from 'antd'
 
 import './Test.css'
@@ -8,17 +8,49 @@ class X extends React.Component {
   constructor(props) {
     super(props);
     this.state = ({
+      /*可编辑行KEY*/
+      editingKey:"",
       company: "上海甄云信息科技有限公司",
       columns: [
         {
           title: '目录编码',
           dataIndex: 'id',
           key: 'id',
+          filter:()=>{
+            const {data} = this.state;
+              const dataMap = (items)=>{
+                items.forEach((item,index)=>{
+                  if(item.key){
+                    if(item.children){
+                      item=Object.assign({},{text:item.id, value:item.id},{children:[...item.children]});
+                      items.splice(index,1,item)
+                    }else {
+                      item=Object.assign({},{text:item.id, value:item.id});
+                      items.splice(index,1,item)
+                    }
+                    return items
+                  }
+                  if(item.children&&item.children.length>0){
+                    dataMap(item.children)
+                  }
+                })
+              };
+              dataMap(data||[]);
+              this.setState({x:data})
+          }
         },
         {
           title: '目录名称',
           dataIndex: 'name',
           key: 'name',
+          render:(text,record)=>{
+            return (this.edit(record))?
+              <div>
+                {this.props.form.getFieldDecorator('newName')(<Input/>)}
+              </div>
+              :
+              <div>{text}</div>
+          }
         },
         {
           title: '目录归属',
@@ -52,23 +84,29 @@ class X extends React.Component {
           key: 'operate',
           render: (text, record) => {
             return (
-              <div className="Test-body-table-operate">
-                <a style={{opacity: (record.state==="启用") ? "1" : ".5"}} onClick={() => this.addb(record)}>新增下级目录</a>
-                <a onClick={()=>this.toggle(record)}>{record.state==="启用" ? "禁用" : "启用"}</a>
-                <a>编辑</a>
-              </div>
+              this.edit(record)?
+                  <div className="Test-body-table-operate">
+                    <a onClick={()=>this.save(record)}>保存</a>
+                    <a onClick={this.cancel}>取消</a>
+                  </div>
+                :
+                <div className="Test-body-table-operate">
+                  <a style={{opacity: (record.state==="启用") ? "1" : ".5"}} onClick={() => this.addb(record)}>新增下级目录</a>
+                  <a onClick={()=>this.toggle(record)}>{record.state==="启用" ? "禁用" : "启用"}</a>
+                  <a onClick={()=>this.isedit(record)}>编辑</a>
+                </div>
             )
           }
         }
       ],
       data: [
         {
-          key: '1',
+          key: 1,
           id: 15126,
           name: '艺术品',
           from: '集团',
           number: '1',
-          hierarchy: '1',
+          hierarchy: 1,
           state: '禁用',
           children: [
             {
@@ -77,7 +115,7 @@ class X extends React.Component {
               name: '绘画/摄影',
               from: '集团',
               number: '1',
-              hierarchy: '2',
+              hierarchy: 2,
               state: '禁用',
               children: [
                 {
@@ -86,7 +124,7 @@ class X extends React.Component {
                   name: '油画',
                   from: '集团',
                   number: '1',
-                  hierarchy: '3',
+                  hierarchy: 3,
                   state: '禁用',
                 },
                 {
@@ -95,7 +133,7 @@ class X extends React.Component {
                   name: '版画',
                   from: '集团',
                   number: '1',
-                  hierarchy: '3',
+                  hierarchy: 3,
                   state: '禁用',
                 },
                 {
@@ -104,7 +142,7 @@ class X extends React.Component {
                   name: '水彩/水粉画',
                   from: '集团',
                   number: '1',
-                  hierarchy: '3',
+                  hierarchy:3,
                   state: '禁用',
                 },
                 {
@@ -113,7 +151,7 @@ class X extends React.Component {
                   name: '水墨画',
                   from: '集团',
                   number: '1',
-                  hierarchy: '3',
+                  hierarchy: 3,
                   state: '禁用',
                 },
                 {
@@ -122,7 +160,7 @@ class X extends React.Component {
                   name: '丙烯画',
                   from: '集团',
                   number: '1',
-                  hierarchy: '3',
+                  hierarchy: 3,
                   state: '禁用',
                 },
                 {
@@ -131,7 +169,7 @@ class X extends React.Component {
                   name: '综合材料画',
                   from: '集团',
                   number: '1',
-                  hierarchy: '3',
+                  hierarchy: 3,
                   state: '禁用',
                 },
                 {
@@ -140,7 +178,7 @@ class X extends React.Component {
                   name: '艺术画册',
                   from: '集团',
                   number: '1',
-                  hierarchy: '3',
+                  hierarchy: 3,
                   state: '禁用',
                 },
                 {
@@ -149,7 +187,7 @@ class X extends React.Component {
                   name: '摄影',
                   from: '集团',
                   number: '1',
-                  hierarchy: '3',
+                  hierarchy: 3,
                   state: '禁用',
                 }
               ]
@@ -160,7 +198,7 @@ class X extends React.Component {
               name: '书法',
               from: '集团',
               number: '1',
-              hierarchy: '2',
+              hierarchy: 2,
               state: '禁用',
             },
             {
@@ -177,7 +215,7 @@ class X extends React.Component {
               id: 15130,
               name: '陶瓷/玉器',
               from: '集团',
-              number: '1',
+              number: 1,
               hierarchy: '2',
               state: '禁用',
             }
@@ -189,7 +227,7 @@ class X extends React.Component {
           name: '数字内容',
           from: '集团',
           number: '1',
-          hierarchy: '1',
+          hierarchy: 1,
           state: '启用',
         }
       ]
@@ -206,9 +244,9 @@ class X extends React.Component {
         name: '摄影',
         from: '集团',
         number: '1',
-        hierarchy: '1',
+        hierarchy: 1,
         state: false,
-      }, {key:x.id},{x});
+      }, {key:x.id},{...x});
       data.push(newItem);
       this.setState({data});
       this.reset();
@@ -234,9 +272,9 @@ class X extends React.Component {
       name: '摄影',
       from: '集团',
       number: '1',
-      hierarchy: '1',
+      hierarchy: 1,
       state: '启用',
-    },{key:x.id},{...x});
+    },{key:x.id,hierarchy:record.hierarchy+1},{...x});
 
     const dataMap =(items)=>{
       items.forEach((item,index)=>{
@@ -244,11 +282,11 @@ class X extends React.Component {
             if(item.children){
               item.children.push(newItem);
             }
+
             else {
               item=Object.assign({...item},{children:[{...newItem}]});
               items.splice(index,1,item);
             }
-          this.setState({data:items});
           return items;
         }
         if(item.children&&item.children.length>0){
@@ -257,6 +295,7 @@ class X extends React.Component {
       })
     };
     dataMap(data||[]);
+    this.setState({data});
   };
 
   /*查询*/
@@ -269,12 +308,10 @@ class X extends React.Component {
     const {key} = record;
     const {data} = this.state;
     const dataMap = (items)=>{
-      items.forEach((item,index)=>{
+      items.forEach((item)=>{
         if(item.key===key){
-          item.state=item.state==="启用"?"禁用":"启用";
           console.log(item);
-          items.splice(index,1,item);
-          this.setState({data:items});
+          item=Object.assign({...item},{state:item.state=item.state==="启用"?"禁用":"启用"});
           return items;
         }
         if(item.children&&item.children.length>0){
@@ -282,11 +319,51 @@ class X extends React.Component {
         }
       })
     };
-    dataMap(data||[])
+    dataMap(data||[]);
+    this.setState({data})
+  };
+
+  /*判断当前行的编辑状态*/
+  edit=(record)=>{
+    return this.state.editingKey === record.key;
+  };
+
+  /*改变当前行的可编辑状态*/
+  isedit=(record)=>{
+    this.setState({editingKey:record.key})
+  };
+
+  /*保存编辑*/
+  save = (record)=>{
+    const value = this.props.form.getFieldValue('newName');
+    const {key} = record;
+    const {data} = this.state;
+    const dataMap = (items)=>{
+      items.forEach((item)=>{
+        if(item.key===key){
+          console.log(item);
+          item=Object.assign({...item},{name:item.name=value});
+          return items;
+        }
+        if(item.children&&item.children.length>0){
+          dataMap(item.children)
+        }
+      })
+    };
+    dataMap(data||[]);
+    this.setState({
+      data,
+      editingKey:""
+    })
+  };
+
+  /*取消保存*/
+  cancel = ()=>{
+    this.setState({editingKey:""})
   };
   render() {
-    const {company, columns, data} = this.state;
-    console.log(data);
+    const {company, columns, data,x} = this.state;
+    console.log(x)
     return (
       <div id="Test">
         <div className="Test-Top">
@@ -337,6 +414,7 @@ class X extends React.Component {
               columns={columns}
               dataSource={data}
               bordered
+              defaultExpandedRowKeys={[1,3]}
             />
           </div>
         </div>
