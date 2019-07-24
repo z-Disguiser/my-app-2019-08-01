@@ -11,94 +11,6 @@ class X extends React.Component {
       /*可编辑行KEY*/
       editingKey:"",
       company: "上海甄云信息科技有限公司",
-      columns: [
-        {
-          title: '目录编码',
-          dataIndex: 'id',
-          key: 'id',
-          filter:()=>{
-            const {data} = this.state;
-              const dataMap = (items)=>{
-                items.forEach((item,index)=>{
-                  if(item.key){
-                    if(item.children){
-                      item=Object.assign({},{text:item.id, value:item.id},{children:[...item.children]});
-                      items.splice(index,1,item)
-                    }else {
-                      item=Object.assign({},{text:item.id, value:item.id});
-                      items.splice(index,1,item)
-                    }
-                    return items
-                  }
-                  if(item.children&&item.children.length>0){
-                    dataMap(item.children)
-                  }
-                })
-              };
-              dataMap(data||[]);
-              this.setState({x:data})
-          }
-        },
-        {
-          title: '目录名称',
-          dataIndex: 'name',
-          key: 'name',
-          render:(text,record)=>{
-            return (this.edit(record))?
-              <div>
-                {this.props.form.getFieldDecorator('newName')(<Input/>)}
-              </div>
-              :
-              <div>{text}</div>
-          }
-        },
-        {
-          title: '目录归属',
-          dataIndex: 'from',
-          key: 'from',
-        },
-        {
-          title: '排序号',
-          dataIndex: 'number',
-          key: 'number',
-        },
-        {
-          title: '目录层级',
-          dataIndex: 'hierarchy',
-          key: 'hierarchy',
-        },
-        {
-          title: '状态',
-          dataIndex: 'state',
-          key: 'state',
-          render: (text) => {
-            return (text==='启用') ?
-              <div><Badge status="success"/><span>启用</span></div>
-              :
-              <div><Badge status="error"/><span>禁用</span></div>
-          }
-        },
-        {
-          title: '操作',
-          dataIndex: 'operate',
-          key: 'operate',
-          render: (text, record) => {
-            return (
-              this.edit(record)?
-                  <div className="Test-body-table-operate">
-                    <a onClick={()=>this.save(record)}>保存</a>
-                    <a onClick={this.cancel}>取消</a>
-                  </div>
-                :
-                <div className="Test-body-table-operate">
-                  <a style={{opacity: (record.state==="启用") ? "1" : ".5"}} onClick={() => this.addb(record)}>新增下级目录</a>
-                  <a onClick={()=>this.toggle(record)}>{record.state==="启用" ? "禁用" : "启用"}</a>
-                  <a onClick={()=>this.isedit(record)}>编辑</a>
-                </div>
-            )
-          }
-        }
-      ],
       data: [
         {
           key: 1,
@@ -215,14 +127,14 @@ class X extends React.Component {
               id: 15130,
               name: '陶瓷/玉器',
               from: '集团',
-              number: 1,
+              number: '1',
               hierarchy: '2',
               state: '禁用',
             }
           ]
         },
         {
-          key: '2',
+          key: 2,
           id: 5272,
           name: '数字内容',
           from: '集团',
@@ -230,9 +142,29 @@ class X extends React.Component {
           hierarchy: 1,
           state: '启用',
         }
-      ]
+      ],
     })
   }
+
+  /*根据data渲染columns*/
+  /*getFilter = ()=>{
+    let data = this.state.data.concat();
+    const getText = (items)=>{
+      items.forEach((item,index)=>{
+        if(!item.children){
+          item = Object.assign({},{text:item.id,value:item.id});
+          items.splice(index,1,item);
+        }
+        if (item.children){
+          item = Object.assign({},{text:item.id,value:item.id},{children:[...item.children]});
+          items.splice(index,1,item);
+          getText(item.children)
+        }
+      });
+    };
+    getText(data);
+    return data;
+  };*/
 
   /*新增顶级目录*/
    add = () => {
@@ -245,11 +177,22 @@ class X extends React.Component {
         from: '集团',
         number: '1',
         hierarchy: 1,
-        state: false,
+        state: '禁用',
       }, {key:x.id},{...x});
       data.push(newItem);
       this.setState({data});
       this.reset();
+  };
+
+   /*添加校验*/
+  addOK = ()=>{
+    this.props.form.validateFields((err)=>{
+      if(err) {
+        console.log('校验错误，禁止提交');
+        return
+      }
+      this.add();
+    })
   };
 
   /*重置*/
@@ -282,7 +225,6 @@ class X extends React.Component {
             if(item.children){
               item.children.push(newItem);
             }
-
             else {
               item=Object.assign({...item},{children:[{...newItem}]});
               items.splice(index,1,item);
@@ -296,10 +238,21 @@ class X extends React.Component {
     };
     dataMap(data||[]);
     this.setState({data});
+    this.reset();
+  };
+
+  addbOK = (record)=>{
+    this.props.form.validateFields((err)=>{
+      if(err){
+        console.log('校验错误，禁止提交');
+        return
+      }
+      this.addb(record)
+    })
   };
 
   /*查询*/
-  query = ()=>{
+  query = (value,record)=>{
 
   };
 
@@ -330,12 +283,16 @@ class X extends React.Component {
 
   /*改变当前行的可编辑状态*/
   isedit=(record)=>{
-    this.setState({editingKey:record.key})
+    this.setState({editingKey:record.key});
   };
 
   /*保存编辑*/
   save = (record)=>{
     const value = this.props.form.getFieldValue('newName');
+    if(value===""){
+      console.log('不能为空');
+      return
+    }
     const {key} = record;
     const {data} = this.state;
     const dataMap = (items)=>{
@@ -357,13 +314,88 @@ class X extends React.Component {
     })
   };
 
+
   /*取消保存*/
   cancel = ()=>{
     this.setState({editingKey:""})
   };
+
+
   render() {
-    const {company, columns, data,x} = this.state;
-    console.log(x)
+    const {company, data} = this.state;
+    const columns = [
+      {
+        title: '目录编码',
+        dataIndex: 'id',
+        key: 'id',
+/*        filters:()=>this.getFilter(),*/
+        onFilter:(value,record)=>{
+          return record.id===value;
+        },
+      },
+      {
+        title: '目录名称',
+        dataIndex: 'name',
+        key: 'name',
+        render:(text,record)=>{
+          return (this.edit(record))?
+            <Form.Item>
+              {this.props.form.getFieldDecorator('newName',{
+                initialValue:record.name,
+                rules:[{required:true,message:'请输入目录名称'}]
+              })(<Input/>)}
+            </Form.Item>
+            :
+            <div>{text}</div>
+        }
+      },
+      {
+        title: '目录归属',
+        dataIndex: 'from',
+        key: 'from',
+      },
+      {
+        title: '排序号',
+        dataIndex: 'number',
+        key: 'number',
+      },
+      {
+        title: '目录层级',
+        dataIndex: 'hierarchy',
+        key: 'hierarchy',
+      },
+      {
+        title: '状态',
+        dataIndex: 'state',
+        key: 'state',
+        render: (text) => {
+          return (text==='启用') ?
+            <div><Badge status="success"/><span>启用</span></div>
+            :
+            <div><Badge status="error"/><span>禁用</span></div>
+        }
+      },
+      {
+        title: '操作',
+        dataIndex: 'operate',
+        key: 'operate',
+        render: (text, record) => {
+          return (
+            this.edit(record)?
+              <div className="Test-body-table-operate">
+                <a onClick={()=>this.save(record)}>保存</a>
+                <a onClick={this.cancel}>取消</a>
+              </div>
+              :
+              <div className="Test-body-table-operate">
+                <a style={{opacity: (record.state==="启用") ? "1" : ".5"}} onClick={() => this.addbOK(record)}>新增下级目录</a>
+                <a onClick={()=>this.toggle(record)}>{record.state==="启用" ? "禁用" : "启用"}</a>
+                <a onClick={()=>this.isedit(record)}>编辑</a>
+              </div>
+          )
+        }
+      }
+    ];
     return (
       <div id="Test">
         <div className="Test-Top">
@@ -377,7 +409,7 @@ class X extends React.Component {
             />
             <Button
               size="default"
-              onClick={()=>this.add()}
+              onClick={()=>this.addOK()}
             >
               + 新增顶级目录
             </Button>
@@ -389,13 +421,19 @@ class X extends React.Component {
             className="Test-body-form"
           >
             <Form.Item label="目录编码">
-              {this.props.form.getFieldDecorator('id')(<Input/>)}
+              {this.props.form.getFieldDecorator('id',{
+                rules: [{whiteSpace:true,required: true,message: '请输入正确的目录编码'}]
+              })(<Input/>)}
             </Form.Item>
             <Form.Item label="目录名称">
-              {this.props.form.getFieldDecorator('name')(<Input/>)}
+              {this.props.form.getFieldDecorator('name',{
+                rules: [{whiteSpace:true,required: true,message: '请输入正确的目录名称'}]
+              })(<Input/>)}
             </Form.Item>
             <Form.Item label="状态">
-              {this.props.form.getFieldDecorator('state')(<Select className="Test-body-form-select">
+              {this.props.form.getFieldDecorator('state',{
+                rules: [{whiteSpace:true,required: true,message: '请输入正确的状态'}]
+              })(<Select className="Test-body-form-select">
                 <Select.Option value="启用">
                   启用
                 </Select.Option>
