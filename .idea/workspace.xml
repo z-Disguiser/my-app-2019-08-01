@@ -3,7 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="2e4ba305-fd5a-434a-aac7-814ad6cfb59e" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Test/Test.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Test/Test.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/Test/Test.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Test/Test.js" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
@@ -20,8 +19,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/components/Test/Test.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="523">
-              <caret line="390" column="27" lean-forward="true" selection-start-line="390" selection-start-column="27" selection-end-line="390" selection-end-column="27" />
+            <state relative-caret-position="616">
+              <caret line="269" column="26" lean-forward="true" selection-start-line="269" selection-start-column="26" selection-end-line="269" selection-end-column="26" />
               <folding>
                 <element signature="e#0#25#0" expanded="true" />
                 <element signature="e#349#3614#0" />
@@ -136,8 +135,8 @@
     <auto-save>true</auto-save>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="383" />
-    <option name="y" value="106" />
+    <option name="x" value="274" />
+    <option name="y" value="71" />
     <option name="width" value="1504" />
     <option name="height" value="974" />
   </component>
@@ -271,7 +270,7 @@
       <workItem from="1563930160156" duration="9336000" />
       <workItem from="1563940949636" duration="33596000" />
       <workItem from="1563979410504" duration="6048000" />
-      <workItem from="1564017645081" duration="7252000" />
+      <workItem from="1564017645081" duration="17254000" />
     </task>
     <task id="LOCAL-00001" summary="6-17">
       <created>1560735362396</created>
@@ -364,14 +363,21 @@
       <option name="project" value="LOCAL" />
       <updated>1563983863220</updated>
     </task>
-    <option name="localTasksCounter" value="14" />
+    <task id="LOCAL-00014" summary="7-25">
+      <created>1564025122734</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1564025122734</updated>
+    </task>
+    <option name="localTasksCounter" value="15" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="477964000" />
+    <option name="totallyTimeSpent" value="487966000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="635" y="104" width="1504" height="974" extended-state="0" />
+    <frame x="689" y="61" width="1504" height="974" extended-state="0" />
     <editor active="true" />
     <layout>
       <window_info content_ui="combo" id="Project" order="0" sideWeight="0.49614793" weight="0.19440655" />
@@ -409,7 +415,8 @@
     <MESSAGE value="7-19" />
     <MESSAGE value="7-23" />
     <MESSAGE value="7-24" />
-    <option name="LAST_COMMIT_MESSAGE" value="7-24" />
+    <MESSAGE value="7-25" />
+    <option name="LAST_COMMIT_MESSAGE" value="7-25" />
   </component>
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/src/components/steps/Steps1.js" />
@@ -762,8 +769,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/components/Test/Test.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="523">
-          <caret line="390" column="27" lean-forward="true" selection-start-line="390" selection-start-column="27" selection-end-line="390" selection-end-column="27" />
+        <state relative-caret-position="616">
+          <caret line="269" column="26" lean-forward="true" selection-start-line="269" selection-start-column="26" selection-end-line="269" selection-end-column="26" />
           <folding>
             <element signature="e#0#25#0" expanded="true" />
             <element signature="e#349#3614#0" />

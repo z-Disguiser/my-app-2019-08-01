@@ -169,10 +169,34 @@ class X extends React.Component {
     return data;
   };*/
 
+  /*判断输入id是否重复*/
+  idRepeat =(id)=>{
+    let isRepeat = null;
+    const {data} = this.state;
+    const dataMap = (items)=>{
+      items.forEach((item)=>{
+        if (item.id===Number(id)){
+          isRepeat = true;
+        }
+        if (item.children&&item.children.length>0){
+          dataMap(item.children)
+        }
+      });
+    };
+    dataMap(data);
+    console.log(isRepeat);
+    return isRepeat
+  };
+
   /*新增顶级目录*/
-   add = () => {
+   add = async () => {
     let data = this.state.data.concat();
     let x = this.props.form.getFieldsValue();
+    const isRepeat = await this.idRepeat(x.id);
+    if (isRepeat){
+      console.log("id重复");
+      return
+    }
       let newItem = Object.assign({
         key: 11,
         id: 15140,
@@ -205,10 +229,6 @@ class X extends React.Component {
 
   /*新增下级目录*/
   addb=(record)=> {
-    if(record.state==='禁用'){
-      console.log("当前为禁用状态");
-      return
-    }
     /*新增子项自动展开父项*/
     let rows = this.state.expandedRows;
     rows.push(record.key);
@@ -242,6 +262,14 @@ class X extends React.Component {
         }
       })
     };
+    if(record.state==='禁用'){
+      console.log("当前为禁用状态");
+      return
+    }
+    else if(this.idRepeat(x.id)){
+      console.log("id重复");
+      return
+    }
     dataMap(data||[]);
     this.setState({data,expandedRows:rows});
     this.reset();
@@ -333,10 +361,6 @@ class X extends React.Component {
     this.setState({editingKey:""})
   };
 
-  handleSearch = (selectedKeys,confirm) => {
-    confirm();
-  };
-
   handleReset = clearFilters => {
     clearFilters();
   };
@@ -351,17 +375,13 @@ class X extends React.Component {
         filterDropdown: ({setSelectedKeys, selectedKeys, confirm, clearFilters}) => (
           <div style={{padding: 8}}>
             <Input
-              ref={node => {
-                this.searchInput = node;
-              }}
               value={selectedKeys[0]}
               onChange={e => setSelectedKeys(e.target.value ? [e.target.value] : [])}
-              onPressEnter={() => confirm()}
               style={{width: 188, marginBottom: 8, display: 'block'}}
             />
             <Button
               type="primary"
-              onClick={() => confirm()}
+              onClick={() => console.log("1")}
               icon="search"
               size="small"
               style={{width: 90, marginRight: 8}}
@@ -373,33 +393,22 @@ class X extends React.Component {
             </Button>
           </div>
         ),
-        filterIcon: filtered => (
+        /*自定义filter图标*/
+        /*filterIcon: filtered => (
           <Icon type="search" style={{color: filtered ? '#1890ff' : undefined}}/>
-        ),
+        ),*/
         onFilter: (value, record) => {
-          console.log(record);
-          const dataMap = (data)=>{
-            if(data.id) {
-              return data.id
-              .toString()
-              .toLowerCase()
-              .includes(value.toLowerCase())
-            }
-            if(data.children&&data.children.length>0){
-              dataMap(data.children)
-            }
-            dataMap(record)
-          }
-          /*return record.id
+          return record.id
           .toString()
           .toLowerCase()
-          .includes(value.toLowerCase())*/
-        },
-        onFilterDropdownVisibleChange: visible => {
+          .includes(value.toLowerCase())
+          },
+        /*选中文本域文本*/
+        /*onFilterDropdownVisibleChange: visible => {
           if (visible) {
             setTimeout(() => this.searchInput.select());
           }
-        }
+        }*/
       },
       {
         title: '目录名称',
@@ -491,17 +500,26 @@ class X extends React.Component {
           >
             <Form.Item label="目录编码">
               {this.props.form.getFieldDecorator('id',{
-                rules: [{whiteSpace:true,required: true,message: '请输入正确的目录编码'}]
+                rules: [
+                  {whitespace:true,message:'禁止存在空格字符'},
+                  {required: true,message: '请输入正确的目录编码'},
+                ]
               })(<Input/>)}
             </Form.Item>
             <Form.Item label="目录名称">
               {this.props.form.getFieldDecorator('name',{
-                rules: [{whiteSpace:true,required: true,message: '请输入正确的目录名称'}]
+                rules: [
+                  {whitespace:true,message:'禁止存在空格字符'},
+                  {required: true,message: '请输入正确的目录名称'},
+                  ]
               })(<Input/>)}
             </Form.Item>
             <Form.Item label="状态">
               {this.props.form.getFieldDecorator('state',{
-                rules: [{whiteSpace:true,required: true,message: '请输入正确的状态'}]
+                rules: [
+                  {whitespace:true,message:'禁止存在空格字符'},
+                  {required: true,message: '请选择正确的状态'}
+                  ]
               })(<Select className="Test-body-form-select">
                 <Select.Option value="启用">
                   启用
@@ -513,7 +531,7 @@ class X extends React.Component {
             </Form.Item>
             <div>
               <Button onClick={this.reset}>重置</Button>
-              <Button onClick={()=>this.query()}>查询</Button>
+              <Button onClick={this.query}>查询</Button>
             </div>
           </Form>
           <div className="Test-body-table">
@@ -523,6 +541,7 @@ class X extends React.Component {
               columns={columns}
               dataSource={data}
               bordered
+              onChange={(pagination,filters,sorter)=>console.log(pagination,filters,sorter)}
             />
           </div>
         </div>
