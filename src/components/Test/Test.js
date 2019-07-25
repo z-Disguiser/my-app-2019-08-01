@@ -227,6 +227,7 @@ class X extends React.Component {
   /*重置*/
   reset=()=>{
     this.props.form.resetFields();
+    this.setState({queryData:[]})
   };
 
   /*新增下级目录*/
@@ -545,7 +546,10 @@ class X extends React.Component {
                   {whitespace:true,message:'禁止存在空格字符'},
                   {required: true,message: '请输入长度为6位的数字'},
                 ]
-              })(<Input maxLength={6}/>)}
+              })(<Input
+                onPressEnter={this.query}
+                maxLength={6}
+              />)}
             </Form.Item>
             <Form.Item label="目录名称">
               {this.props.form.getFieldDecorator('name',{
