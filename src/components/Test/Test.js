@@ -1,5 +1,5 @@
 import React from 'react'
-import {Typography,Input,Button,Select,Table,Badge,Form} from 'antd'
+import {Typography,Input,Button,Select,Table,Badge,Form,Icon} from 'antd'
 
 import './Test.css'
 
@@ -10,6 +10,9 @@ class X extends React.Component {
     this.state = ({
       /*可编辑行KEY*/
       editingKey:"",
+      /*添加子项时需展开的父项*/
+      expandedRows:[],
+      searchText: '',
       company: "上海甄云信息科技有限公司",
       data: [
         {
@@ -206,6 +209,9 @@ class X extends React.Component {
       console.log("当前为禁用状态");
       return
     }
+    /*新增子项自动展开父项*/
+    let rows = this.state.expandedRows;
+    rows.push(record.key);
     const {data} = this.state;
     let {id} = record;
     let x = this.props.form.getFieldsValue();
@@ -237,7 +243,7 @@ class X extends React.Component {
       })
     };
     dataMap(data||[]);
-    this.setState({data});
+    this.setState({data,expandedRows:rows});
     this.reset();
   };
 
@@ -252,8 +258,9 @@ class X extends React.Component {
   };
 
   /*查询*/
-  query = (value,record)=>{
-
+  query = ()=>{
+    const value = this.props.form.getFieldValue('id');
+    this.handleSearch([value])
   };
 
   /*切换启禁用*/
@@ -314,13 +321,25 @@ class X extends React.Component {
     })
   };
 
+  /*获取当前行展开*/
+  changeRows=(expandedRows)=>{
+    this.setState({
+      expandedRows
+    })
+  };
 
   /*取消保存*/
   cancel = ()=>{
     this.setState({editingKey:""})
   };
 
+  handleSearch = (selectedKeys,confirm) => {
+    confirm();
+  };
 
+  handleReset = clearFilters => {
+    clearFilters();
+  };
   render() {
     const {company, data} = this.state;
     const columns = [
@@ -328,10 +347,59 @@ class X extends React.Component {
         title: '目录编码',
         dataIndex: 'id',
         key: 'id',
-/*        filters:()=>this.getFilter(),*/
-        onFilter:(value,record)=>{
-          return record.id===value;
+        /*        filters:()=>this.getFilter(),*/
+        filterDropdown: ({setSelectedKeys, selectedKeys, confirm, clearFilters}) => (
+          <div style={{padding: 8}}>
+            <Input
+              ref={node => {
+                this.searchInput = node;
+              }}
+              value={selectedKeys[0]}
+              onChange={e => setSelectedKeys(e.target.value ? [e.target.value] : [])}
+              onPressEnter={() => confirm()}
+              style={{width: 188, marginBottom: 8, display: 'block'}}
+            />
+            <Button
+              type="primary"
+              onClick={() => confirm()}
+              icon="search"
+              size="small"
+              style={{width: 90, marginRight: 8}}
+            >
+              Search
+            </Button>
+            <Button onClick={() => this.handleReset(clearFilters)} size="small" style={{width: 90}}>
+              Reset
+            </Button>
+          </div>
+        ),
+        filterIcon: filtered => (
+          <Icon type="search" style={{color: filtered ? '#1890ff' : undefined}}/>
+        ),
+        onFilter: (value, record) => {
+          console.log(record);
+          const dataMap = (data)=>{
+            if(data.id) {
+              return data.id
+              .toString()
+              .toLowerCase()
+              .includes(value.toLowerCase())
+            }
+            if(data.children&&data.children.length>0){
+              dataMap(data.children)
+            }
+            dataMap(record)
+          }
+          /*return record.id
+          .toString()
+          .toLowerCase()
+          .includes(value.toLowerCase())*/
         },
+        onFilterDropdownVisibleChange: visible => {
+          if (visible) {
+            setTimeout(() => this.searchInput.select());
+          }
+        }
       },
       {
         title: '目录名称',
@@ -396,6 +464,7 @@ class X extends React.Component {
         }
       }
     ];
+
     return (
       <div id="Test">
         <div className="Test-Top">
@@ -444,15 +513,16 @@ class X extends React.Component {
             </Form.Item>
             <div>
               <Button onClick={this.reset}>重置</Button>
-              <Button>查询</Button>
+              <Button onClick={()=>this.query()}>查询</Button>
             </div>
           </Form>
           <div className="Test-body-table">
             <Table
+              expandedRowKeys={this.state.expandedRows}
+              onExpandedRowsChange={this.changeRows}
               columns={columns}
               dataSource={data}
               bordered
-              defaultExpandedRowKeys={[1,3]}
             />
           </div>
         </div>
@@ -463,29 +533,3 @@ class X extends React.Component {
 const TableTest = Form.create({name:'x'})(X);
 export default TableTest;
 
-{/*<Drawer
-  width={400}
-  title='新增顶级目录'
-  placement="left"
-  closable={true}
-  onClose={this.onClose}
-  visible={isshow}
->
-  <Form
-    labelAlign="left"
-  >
-    {columns.map((item, index) => {
-      return (
-
-        <Form.Item
-          label={item.title}
-          key={index}
-          labelCol={{span: 5}}
-          wrapperCol={{span: 8}}
-        >
-        </Form.Item>
-      )
-    })}
-    <Button type='primary' onClick={this.add}>添加</Button>
-  </Form>
-</Drawer>}*/}

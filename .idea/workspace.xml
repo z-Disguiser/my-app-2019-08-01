@@ -20,15 +20,11 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/components/Test/Test.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1515">
-              <caret line="360" column="7" lean-forward="true" selection-start-line="360" selection-start-column="7" selection-end-line="360" selection-end-column="7" />
+            <state relative-caret-position="523">
+              <caret line="390" column="27" lean-forward="true" selection-start-line="390" selection-start-column="27" selection-end-line="390" selection-end-column="27" />
               <folding>
-                <element signature="e#334#3599#0" />
-                <element signature="e#8111#8191#0" />
-                <element signature="e#8199#8282#0" />
-                <element signature="e#8290#8380#0" />
-                <element signature="e#8388#8679#0" />
-                <element signature="e#8687#9428#0" />
+                <element signature="e#0#25#0" expanded="true" />
+                <element signature="e#349#3614#0" />
               </folding>
             </state>
           </provider>
@@ -37,7 +33,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/components/modify/Modify.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="62">
+            <state relative-caret-position="-1940">
               <caret line="3" column="14" selection-start-line="3" selection-start-column="14" selection-end-line="3" selection-end-column="14" />
               <folding>
                 <element signature="e#0#25#0" expanded="true" />
@@ -49,8 +45,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/components/Test/Test.css">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="616">
-              <caret line="31" column="17" selection-start-line="31" selection-start-column="17" selection-end-line="31" selection-end-column="17" />
+            <state relative-caret-position="492">
+              <caret line="43" column="16" selection-start-line="43" selection-start-column="16" selection-end-line="43" selection-end-column="16" />
             </state>
           </provider>
         </entry>
@@ -70,6 +66,7 @@
   <component name="FindInProjectRecents">
     <findStrings>
       <find>x</find>
+      <find>searchText</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -140,7 +137,7 @@
   </component>
   <component name="ProjectFrameBounds">
     <option name="x" value="383" />
-    <option name="y" value="108" />
+    <option name="y" value="106" />
     <option name="width" value="1504" />
     <option name="height" value="974" />
   </component>
@@ -273,7 +270,8 @@
       <workItem from="1563892727001" duration="12698000" />
       <workItem from="1563930160156" duration="9336000" />
       <workItem from="1563940949636" duration="33596000" />
-      <workItem from="1563979410504" duration="2422000" />
+      <workItem from="1563979410504" duration="6048000" />
+      <workItem from="1564017645081" duration="7252000" />
     </task>
     <task id="LOCAL-00001" summary="6-17">
       <created>1560735362396</created>
@@ -359,14 +357,21 @@
       <option name="project" value="LOCAL" />
       <updated>1563952105309</updated>
     </task>
-    <option name="localTasksCounter" value="13" />
+    <task id="LOCAL-00013" summary="7-24">
+      <created>1563983863220</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1563983863220</updated>
+    </task>
+    <option name="localTasksCounter" value="14" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="467086000" />
+    <option name="totallyTimeSpent" value="477964000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="383" y="108" width="1504" height="974" extended-state="0" />
+    <frame x="635" y="104" width="1504" height="974" extended-state="0" />
     <editor active="true" />
     <layout>
       <window_info content_ui="combo" id="Project" order="0" sideWeight="0.49614793" weight="0.19440655" />
@@ -740,7 +745,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/components/modify/Modify.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="62">
+        <state relative-caret-position="-1940">
           <caret line="3" column="14" selection-start-line="3" selection-start-column="14" selection-end-line="3" selection-end-column="14" />
           <folding>
             <element signature="e#0#25#0" expanded="true" />
@@ -750,22 +755,18 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/components/Test/Test.css">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="616">
-          <caret line="31" column="17" selection-start-line="31" selection-start-column="17" selection-end-line="31" selection-end-column="17" />
+        <state relative-caret-position="492">
+          <caret line="43" column="16" selection-start-line="43" selection-start-column="16" selection-end-line="43" selection-end-column="16" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/components/Test/Test.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1515">
-          <caret line="360" column="7" lean-forward="true" selection-start-line="360" selection-start-column="7" selection-end-line="360" selection-end-column="7" />
+        <state relative-caret-position="523">
+          <caret line="390" column="27" lean-forward="true" selection-start-line="390" selection-start-column="27" selection-end-line="390" selection-end-column="27" />
           <folding>
-            <element signature="e#334#3599#0" />
-            <element signature="e#8111#8191#0" />
-            <element signature="e#8199#8282#0" />
-            <element signature="e#8290#8380#0" />
-            <element signature="e#8388#8679#0" />
-            <element signature="e#8687#9428#0" />
+            <element signature="e#0#25#0" expanded="true" />
+            <element signature="e#349#3614#0" />
           </folding>
         </state>
       </provider>

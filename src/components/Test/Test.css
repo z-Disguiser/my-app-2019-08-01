@@ -39,10 +39,11 @@
     background-color: #37bbd0;
     margin-left: 10px;
 }
-#Test .Test-body-table td,#Test .Test-body-table th{
-    text-align: center;
+#Test .Test-body-table-operate{
+    display: flex;
+    width: 200px;
 }
 #Test .Test-body-table-operate a{
+    flex-grow: 1;
     color: #31bfc9;
-    margin-left: 15px;
 }
