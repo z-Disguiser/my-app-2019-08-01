@@ -12,6 +12,8 @@ class X extends React.Component {
       editingKey:"",
       /*添加子项时需展开的父项*/
       expandedRows:[],
+      /*筛选后的数据*/
+      queryData:[],
       searchText: '',
       company: "上海甄云信息科技有限公司",
       data: [
@@ -191,9 +193,8 @@ class X extends React.Component {
   /*新增顶级目录*/
    add = async () => {
     let data = this.state.data.concat();
-    let x = this.props.form.getFieldsValue();
-    const isRepeat = await this.idRepeat(x.id);
-    if (isRepeat){
+    let x = this.props.form.getFieldsValue(['id','name','state']);
+    if (await this.idRepeat(x.id)){
       console.log("id重复");
       return
     }
@@ -216,6 +217,7 @@ class X extends React.Component {
     this.props.form.validateFields((err)=>{
       if(err) {
         console.log('校验错误，禁止提交');
+        this.reset();
         return
       }
       this.add();
@@ -234,7 +236,7 @@ class X extends React.Component {
     rows.push(record.key);
     const {data} = this.state;
     let {id} = record;
-    let x = this.props.form.getFieldsValue();
+    let x = this.props.form.getFieldsValue(['id','name','state']);
     let newItem = Object.assign({
       key: 11,
       id: 15140,
@@ -262,6 +264,7 @@ class X extends React.Component {
         }
       })
     };
+
     if(record.state==='禁用'){
       console.log("当前为禁用状态");
       return
@@ -279,16 +282,37 @@ class X extends React.Component {
     this.props.form.validateFields((err)=>{
       if(err){
         console.log('校验错误，禁止提交');
+        this.reset();
         return
       }
       this.addb(record)
     })
   };
 
-  /*查询*/
+  /*id查询*/
   query = ()=>{
-    const value = this.props.form.getFieldValue('id');
-    this.handleSearch([value])
+      const idValue = this.props.form.getFieldValue('id');
+      /*查询到的数据会带着子级数据一起渲染*/
+    let queryData = [];
+    const Data = this.state.data.concat();
+    const dataMap = (items)=>{
+      items.filter(item=>{
+        console.log(item.id.toString().includes(idValue));
+        if(item.id
+        .toString()
+        .toLowerCase()
+        .includes(idValue.toLowerCase())){
+          queryData.push(item);
+          return item
+        }
+        if(item.children&&item.children.length>0){
+          dataMap(item.children)
+        }
+      });
+    };
+    dataMap(Data);
+    this.setState({queryData});
+    console.log(queryData)
   };
 
   /*切换启禁用*/
@@ -324,10 +348,6 @@ class X extends React.Component {
   /*保存编辑*/
   save = (record)=>{
     const value = this.props.form.getFieldValue('newName');
-    if(value===""){
-      console.log('不能为空');
-      return
-    }
     const {key} = record;
     const {data} = this.state;
     const dataMap = (items)=>{
@@ -349,6 +369,16 @@ class X extends React.Component {
     })
   };
 
+  saveOK = (record)=>{
+    this.props.form.validateFields(['newName'],(err)=>{
+      if(err){
+        console.log('校验错误，禁止提交');
+        return
+      }
+      this.save(record)
+    })
+  };
+
   /*获取当前行展开*/
   changeRows=(expandedRows)=>{
     this.setState({
@@ -361,11 +391,16 @@ class X extends React.Component {
     this.setState({editingKey:""})
   };
 
+  handleSearch = (selectedKeys, confirm) => {
+    confirm();
+    this.setState({ searchText: selectedKeys[0] });
+  };
+
   handleReset = clearFilters => {
     clearFilters();
   };
   render() {
-    const {company, data} = this.state;
+    const {company, data,queryData} = this.state;
     const columns = [
       {
         title: '目录编码',
@@ -376,12 +411,13 @@ class X extends React.Component {
           <div style={{padding: 8}}>
             <Input
               value={selectedKeys[0]}
+              onPressEnter={() => this.handleSearch(selectedKeys[0],confirm)}
               onChange={e => setSelectedKeys(e.target.value ? [e.target.value] : [])}
               style={{width: 188, marginBottom: 8, display: 'block'}}
             />
             <Button
               type="primary"
-              onClick={() => console.log("1")}
+              onClick={() => this.handleSearch(selectedKeys[0],confirm)}
               icon="search"
               size="small"
               style={{width: 90, marginRight: 8}}
@@ -394,9 +430,11 @@ class X extends React.Component {
           </div>
         ),
         /*自定义filter图标*/
-        /*filterIcon: filtered => (
+        filterIcon: filtered => (
           <Icon type="search" style={{color: filtered ? '#1890ff' : undefined}}/>
-        ),*/
+        ),
+
+        /*在自定义筛选框消失时触发(非onFilterDropdownVisibleChange)?*/
         onFilter: (value, record) => {
           return record.id
           .toString()
@@ -419,7 +457,10 @@ class X extends React.Component {
             <Form.Item>
               {this.props.form.getFieldDecorator('newName',{
                 initialValue:record.name,
-                rules:[{required:true,message:'请输入目录名称'}]
+                rules: [
+                  {whitespace:true,message:'禁止存在空格字符'},
+                  {required: true,message: '请输入正确的目录名称'},
+                ]
               })(<Input/>)}
             </Form.Item>
             :
@@ -460,7 +501,7 @@ class X extends React.Component {
           return (
             this.edit(record)?
               <div className="Test-body-table-operate">
-                <a onClick={()=>this.save(record)}>保存</a>
+                <a onClick={()=>this.saveOK(record)}>保存</a>
                 <a onClick={this.cancel}>取消</a>
               </div>
               :
@@ -502,9 +543,9 @@ class X extends React.Component {
               {this.props.form.getFieldDecorator('id',{
                 rules: [
                   {whitespace:true,message:'禁止存在空格字符'},
-                  {required: true,message: '请输入正确的目录编码'},
+                  {required: true,message: '请输入长度为6位的数字'},
                 ]
-              })(<Input/>)}
+              })(<Input maxLength={6}/>)}
             </Form.Item>
             <Form.Item label="目录名称">
               {this.props.form.getFieldDecorator('name',{
@@ -539,7 +580,7 @@ class X extends React.Component {
               expandedRowKeys={this.state.expandedRows}
               onExpandedRowsChange={this.changeRows}
               columns={columns}
-              dataSource={data}
+              dataSource={(queryData.length>0)?queryData:data}
               bordered
               onChange={(pagination,filters,sorter)=>console.log(pagination,filters,sorter)}
             />
