@@ -297,7 +297,7 @@ class X extends React.Component {
     let queryData = [];
     let Data = this.state.data.concat();
     const dataMap = (items)=>{
-      queryData =items.filter(item=>{
+      items.filter(item=>{
         if(item.id
         .toString()
         .toLowerCase()
@@ -313,6 +313,17 @@ class X extends React.Component {
     dataMap(Data);
     this.setState({queryData});
     this.props.form.resetFields();
+  };
+
+  /*查询验证*/
+  queryOK = ()=>{
+    this.props.form.validateFields(['id'],(err)=>{
+      if(err){
+        console.log('校验错误，禁止提交');
+        return
+      }
+      this.query()
+    })
   };
 
   /*切换启禁用*/
@@ -575,7 +586,7 @@ class X extends React.Component {
             </Form.Item>
             <div>
               <Button onClick={this.reset}>重置</Button>
-              <Button onClick={this.query}>查询</Button>
+              <Button onClick={this.queryOK}>查询</Button>
             </div>
           </Form>
           <div className="Test-body-table">
