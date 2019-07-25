@@ -217,7 +217,7 @@ class X extends React.Component {
     this.props.form.validateFields((err)=>{
       if(err) {
         console.log('校验错误，禁止提交');
-        this.reset();
+        setTimeout(this.props.form.resetFields,2000);
         return
       }
       this.add();
@@ -291,14 +291,13 @@ class X extends React.Component {
   };
 
   /*id查询*/
-  query = ()=>{
-      const idValue = this.props.form.getFieldValue('id');
-      /*查询到的数据会带着子级数据一起渲染*/
+  query = async ()=>{
+      const idValue =await this.props.form.getFieldValue('id');
+      /**/
     let queryData = [];
-    const Data = this.state.data.concat();
+    let Data = this.state.data.concat();
     const dataMap = (items)=>{
-      items.filter(item=>{
-        console.log(item.id.toString().includes(idValue));
+      queryData =items.filter(item=>{
         if(item.id
         .toString()
         .toLowerCase()
@@ -313,7 +312,7 @@ class X extends React.Component {
     };
     dataMap(Data);
     this.setState({queryData});
-    console.log(queryData)
+    this.props.form.resetFields();
   };
 
   /*切换启禁用*/
@@ -529,7 +528,7 @@ class X extends React.Component {
             />
             <Button
               size="default"
-              onClick={()=>this.addOK()}
+              onClick={this.addOK}
             >
               + 新增顶级目录
             </Button>
