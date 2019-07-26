@@ -481,6 +481,7 @@ class X extends React.Component {
         title: '目录名称',
         dataIndex: 'name',
         key: 'name',
+        width:300,
         render:(text,record)=>{
           return (this.edit(record))?
             <Form.Item>

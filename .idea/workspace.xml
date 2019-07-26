@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="2e4ba305-fd5a-434a-aac7-814ad6cfb59e" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+    <list default="true" id="2e4ba305-fd5a-434a-aac7-814ad6cfb59e" name="Default Changelist" comment="7-26">
       <change beforePath="$PROJECT_DIR$/src/components/Test/Test.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Test/Test.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Test/Test.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Test/Test.js" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -16,11 +16,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/components/Test/Test.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="230">
-              <caret line="531" column="55" lean-forward="true" selection-start-line="531" selection-start-column="55" selection-end-line="531" selection-end-column="55" />
+            <state relative-caret-position="798">
+              <caret line="565" column="8" selection-start-line="565" selection-start-column="8" selection-end-line="565" selection-end-column="8" />
               <folding>
                 <element signature="e#0#25#0" expanded="true" />
                 <element signature="n#!!block;n#constructor#0;n#X#0" />
@@ -47,7 +47,8 @@
                 <element signature="e#11828#11911#0" />
                 <element signature="e#11919#12009#0" />
                 <element signature="e#12017#12308#0" />
-                <element signature="e#13469#15956#0" />
+                <element signature="e#13111#13551#0" />
+                <element signature="e#13942#15943#0" />
               </folding>
             </state>
           </provider>
@@ -65,11 +66,11 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/components/Test/Test.css">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="585">
-              <caret line="48" column="43" selection-start-line="48" selection-start-column="43" selection-end-line="48" selection-end-column="43" />
+            <state relative-caret-position="492">
+              <caret line="51" column="23" selection-start-line="51" selection-start-column="23" selection-end-line="51" selection-end-column="23" />
             </state>
           </provider>
         </entry>
@@ -159,8 +160,8 @@
     <auto-save>true</auto-save>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="346" />
-    <option name="y" value="128" />
+    <option name="x" value="232" />
+    <option name="y" value="65" />
     <option name="width" value="1504" />
     <option name="height" value="974" />
   </component>
@@ -295,7 +296,7 @@
       <workItem from="1563940949636" duration="33596000" />
       <workItem from="1563979410504" duration="6048000" />
       <workItem from="1564017645081" duration="29622000" />
-      <workItem from="1564103132191" duration="5711000" />
+      <workItem from="1564103132191" duration="6595000" />
     </task>
     <task id="LOCAL-00001" summary="6-17">
       <created>1560735362396</created>
@@ -444,14 +445,21 @@
       <option name="project" value="LOCAL" />
       <updated>1564108274605</updated>
     </task>
-    <option name="localTasksCounter" value="22" />
+    <task id="LOCAL-00022" summary="7-26">
+      <created>1564109056591</created>
+      <option name="number" value="00022" />
+      <option name="presentableId" value="LOCAL-00022" />
+      <option name="project" value="LOCAL" />
+      <updated>1564109056591</updated>
+    </task>
+    <option name="localTasksCounter" value="23" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="506045000" />
+    <option name="totallyTimeSpent" value="506929000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="341" y="64" width="1504" height="974" extended-state="0" />
+    <frame x="137" y="84" width="1504" height="974" extended-state="0" />
     <editor active="true" />
     <layout>
       <window_info content_ui="combo" id="Project" order="0" sideWeight="0.49614793" weight="0.19440655" />
@@ -835,10 +843,17 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/components/Test/Test.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="492">
+          <caret line="51" column="23" selection-start-line="51" selection-start-column="23" selection-end-line="51" selection-end-column="23" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/components/Test/Test.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="230">
-          <caret line="531" column="55" lean-forward="true" selection-start-line="531" selection-start-column="55" selection-end-line="531" selection-end-column="55" />
+        <state relative-caret-position="798">
+          <caret line="565" column="8" selection-start-line="565" selection-start-column="8" selection-end-line="565" selection-end-column="8" />
           <folding>
             <element signature="e#0#25#0" expanded="true" />
             <element signature="n#!!block;n#constructor#0;n#X#0" />
@@ -865,15 +880,9 @@
             <element signature="e#11828#11911#0" />
             <element signature="e#11919#12009#0" />
             <element signature="e#12017#12308#0" />
-            <element signature="e#13469#15956#0" />
+            <element signature="e#13111#13551#0" />
+            <element signature="e#13942#15943#0" />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/components/Test/Test.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="585">
-          <caret line="48" column="43" selection-start-line="48" selection-start-column="43" selection-end-line="48" selection-end-column="43" />
         </state>
       </provider>
     </entry>
