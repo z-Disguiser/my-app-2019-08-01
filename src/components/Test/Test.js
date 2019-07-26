@@ -14,7 +14,6 @@ class X extends React.Component {
       expandedRows:[],
       /*筛选后的数据*/
       queryData:[],
-      searchText: '',
       company: "上海甄云信息科技有限公司",
       data: [
         {
@@ -186,11 +185,11 @@ class X extends React.Component {
       });
     };
     dataMap(data);
-    console.log(isRepeat);
     return isRepeat
   };
 
-  /*新增顶级目录*/
+  /*新增顶级目录
+  * 筛选时添加顶级目录会自动回到目录顶级*/
    add = async () => {
     let data = this.state.data.concat();
     let x = this.props.form.getFieldsValue(['id','name','state']);
@@ -212,7 +211,7 @@ class X extends React.Component {
       this.reset();
   };
 
-   /*添加校验*/
+   /*新增顶级目录校验*/
   addOK = ()=>{
     this.props.form.validateFields((err)=>{
       if(err) {
@@ -224,7 +223,7 @@ class X extends React.Component {
     })
   };
 
-  /*重置*/
+  /*重置筛选*/
   reset=()=>{
     this.props.form.resetFields();
     this.setState({queryData:[]})
@@ -235,7 +234,7 @@ class X extends React.Component {
     /*新增子项自动展开父项*/
     let rows = this.state.expandedRows;
     rows.push(record.key);
-    const {data} = this.state;
+    const {data,queryData} = this.state;
     let {id} = record;
     let x = this.props.form.getFieldsValue(['id','name','state']);
     let newItem = Object.assign({
@@ -275,29 +274,39 @@ class X extends React.Component {
       return
     }
     dataMap(data||[]);
+
+    /*筛选时添加下级目录*/
+    if (queryData.length>0){
+      dataMap(queryData||[])
+    }
     this.setState({data,expandedRows:rows});
-    this.reset();
+    this.props.form.resetFields();
   };
 
+  /*新增下级目录校验*/
   addbOK = (record)=>{
+    if(record.state==="禁用"){
+      console.log("当前为禁用状态");
+      return
+    }
     this.props.form.validateFields((err)=>{
       if(err){
         console.log('校验错误，禁止提交');
-        this.reset();
+        setTimeout(this.props.form.resetFields,2000);
         return
       }
       this.addb(record)
     })
   };
 
-  /*id查询*/
+  /*id查询(带子项)*/
   query = async ()=>{
       const idValue =await this.props.form.getFieldValue('id');
       /**/
     let queryData = [];
-    let Data = this.state.data.concat();
+    let {data} = this.state;
     const dataMap = (items)=>{
-      items.filter(item=>{
+      items.forEach(item=>{
         if(item.id
         .toString()
         .toLowerCase()
@@ -310,7 +319,7 @@ class X extends React.Component {
         }
       });
     };
-    dataMap(Data);
+    dataMap(data||[]);
     this.setState({queryData});
     this.props.form.resetFields();
   };
@@ -320,6 +329,7 @@ class X extends React.Component {
     this.props.form.validateFields(['id'],(err)=>{
       if(err){
         console.log('校验错误，禁止提交');
+        setTimeout(this.props.form.resetFields,2000);
         return
       }
       this.query()
@@ -380,6 +390,7 @@ class X extends React.Component {
     })
   };
 
+  /*保存编辑验证*/
   saveOK = (record)=>{
     this.props.form.validateFields(['newName'],(err)=>{
       if(err){
@@ -402,6 +413,7 @@ class X extends React.Component {
     this.setState({editingKey:""})
   };
 
+  /*-------------------------------------------------------------------------------*/
   handleSearch = (selectedKeys, confirm) => {
     confirm();
     this.setState({ searchText: selectedKeys[0] });
@@ -410,6 +422,9 @@ class X extends React.Component {
   handleReset = clearFilters => {
     clearFilters();
   };
+
+  /*---------------------------------------------------------------------------------*/
+
   render() {
     const {company, data,queryData} = this.state;
     const columns = [
@@ -554,7 +569,7 @@ class X extends React.Component {
               {this.props.form.getFieldDecorator('id',{
                 rules: [
                   {whitespace:true,message:'禁止存在空格字符'},
-                  {required: true,message: '请输入长度为6位的数字'},
+                  {required: true,message: '请输入最多6位数字'},
                 ]
               })(<Input
                 onPressEnter={this.query}
