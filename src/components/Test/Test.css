@@ -49,3 +49,6 @@
 #Test .Test-body-table-operate a:last-child{
     flex-grow: 4;
 }
+#Test .Test-body-table .ant-form-item{
+    margin: 0;
+}
