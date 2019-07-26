@@ -532,6 +532,7 @@ class X extends React.Component {
               <div className="Test-body-table-operate">
                 <a onClick={()=>this.saveOK(record)}>保存</a>
                 <a onClick={this.cancel}>取消</a>
+                <a></a>
               </div>
               :
               <div className="Test-body-table-operate">

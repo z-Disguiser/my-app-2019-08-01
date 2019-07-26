@@ -41,9 +41,11 @@
 }
 #Test .Test-body-table-operate{
     display: flex;
-    width: 200px;
 }
 #Test .Test-body-table-operate a{
     flex-grow: 1;
     color: #31bfc9;
+}
+#Test .Test-body-table-operate a:last-child{
+    flex-grow: 4;
 }
