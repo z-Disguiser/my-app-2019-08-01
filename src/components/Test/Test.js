@@ -1,5 +1,5 @@
 import React from 'react'
-import {Typography,Input,Button,Select,Table,Badge,Form,Icon} from 'antd'
+import {Typography,Input,Button,Select,Table,Badge,Form,Icon,message} from 'antd'
 
 import './Test.css'
 
@@ -150,6 +150,7 @@ class X extends React.Component {
     })
   }
 
+
   /*根据data渲染columns*/
   /*getFilter = ()=>{
     let data = this.state.data.concat();
@@ -194,7 +195,7 @@ class X extends React.Component {
     let data = this.state.data.concat();
     let x = this.props.form.getFieldsValue(['id','name','state']);
     if (await this.idRepeat(x.id)){
-      console.log("id重复");
+      message.error("id重复!");
       return
     }
       let newItem = Object.assign({
@@ -209,14 +210,14 @@ class X extends React.Component {
       data.push(newItem);
       this.setState({data});
       this.reset();
+      message.success("新增顶级目录成功！")
   };
 
    /*新增顶级目录校验*/
   addOK = ()=>{
     this.props.form.validateFields((err)=>{
       if(err) {
-        console.log('校验错误，禁止提交');
-        setTimeout(this.props.form.resetFields,2000);
+        message.error('数据格式错误，添加失败！');
         return
       }
       this.add();
@@ -226,7 +227,8 @@ class X extends React.Component {
   /*重置筛选*/
   reset=()=>{
     this.props.form.resetFields();
-    this.setState({queryData:[]})
+    this.setState({queryData:[]});
+    message.success('重置成功！')
   };
 
   /*新增下级目录*/
@@ -265,12 +267,9 @@ class X extends React.Component {
       })
     };
 
-    if(record.state==='禁用'){
-      console.log("当前为禁用状态");
-      return
-    }
-    else if(this.idRepeat(x.id)){
-      console.log("id重复");
+    /*查询id是否重复*/
+    if(this.idRepeat(x.id)){
+      message.error("目录编码重复,添加失败！");
       return
     }
     dataMap(data||[]);
@@ -281,18 +280,18 @@ class X extends React.Component {
     }
     this.setState({data,expandedRows:rows});
     this.props.form.resetFields();
+    message.success("新增下级目录成功！")
   };
 
   /*新增下级目录校验*/
   addbOK = (record)=>{
     if(record.state==="禁用"){
-      console.log("当前为禁用状态");
+      message.warning("当前为禁用状态");
       return
     }
     this.props.form.validateFields((err)=>{
       if(err){
-        console.log('校验错误，禁止提交');
-        setTimeout(this.props.form.resetFields,2000);
+        message.error('新增下级目录失败！');
         return
       }
       this.addb(record)
@@ -321,18 +320,19 @@ class X extends React.Component {
     };
     dataMap(data||[]);
     if(queryData.length===0){
-      console.log("该目录编码不存在")
+      message.warning("该目录编码不存在")
+    }else {
+      this.setState({queryData});
+      this.props.form.resetFields();
+      message.success(`成功查询到${queryData.length}条数据`)
     }
-    this.setState({queryData});
-    this.props.form.resetFields();
   };
 
   /*查询验证*/
   queryOK = ()=>{
     this.props.form.validateFields(['id'],(err)=>{
       if(err){
-        console.log('校验错误，禁止提交');
-        setTimeout(this.props.form.resetFields,2000);
+        message.warning("请输入正确的目录编码！");
         return
       }
       this.query()
@@ -346,7 +346,6 @@ class X extends React.Component {
     const dataMap = (items)=>{
       items.forEach((item)=>{
         if(item.key===key){
-          console.log(item);
           item=Object.assign({...item},{state:item.state=item.state==="启用"?"禁用":"启用"});
           return items;
         }
@@ -356,6 +355,7 @@ class X extends React.Component {
       })
     };
     dataMap(data||[]);
+    message.warning(`已${record.state}`);
     this.setState({data})
   };
 
@@ -390,14 +390,16 @@ class X extends React.Component {
     this.setState({
       data,
       editingKey:""
-    })
+    });
+    message.success(`成功将目录名称修改为"${value}"`)
   };
 
   /*保存编辑验证*/
   saveOK = (record)=>{
     this.props.form.validateFields(['newName'],(err)=>{
       if(err){
-        console.log('校验错误，禁止提交');
+        message.error('请输入正确的目录名称！');
+        this.setState({editingKey:""});
         return
       }
       this.save(record)
@@ -413,6 +415,7 @@ class X extends React.Component {
 
   /*取消保存*/
   cancel = ()=>{
+    message.warn('取消成功！');
     this.setState({editingKey:""})
   };
 
@@ -488,7 +491,6 @@ class X extends React.Component {
               {this.props.form.getFieldDecorator('newName',{
                 initialValue:record.name,
                 rules: [
-                  {whitespace:true,message:'禁止存在空格字符'},
                   {required: true,message: '请输入正确的目录名称'},
                 ]
               })(<Input/>)}
@@ -572,29 +574,35 @@ class X extends React.Component {
             <Form.Item label="目录编码">
               {this.props.form.getFieldDecorator('id',{
                 rules: [
-                  {whitespace:true,message:'禁止存在空格字符'},
                   {required: true,message: '请输入最多6位数字'},
-                ]
+                  {pattern: new RegExp(/^[1-9]\d*$/, "g"),message:"目录编码必须为数字"},
+                ],
+                validateTrigger:['onBlur']
               })(<Input
                 onPressEnter={this.query}
+                autoComplete="off"
+                allowClear
                 maxLength={6}
               />)}
             </Form.Item>
             <Form.Item label="目录名称">
               {this.props.form.getFieldDecorator('name',{
                 rules: [
-                  {whitespace:true,message:'禁止存在空格字符'},
                   {required: true,message: '请输入正确的目录名称'},
-                  ]
-              })(<Input/>)}
+                  ],
+                validateTrigger:['onBlur']
+              })(<Input
+                autoComplete="off"
+                allowClear
+              />)}
             </Form.Item>
             <Form.Item label="状态">
               {this.props.form.getFieldDecorator('state',{
                 rules: [
-                  {whitespace:true,message:'禁止存在空格字符'},
-                  {required: true,message: '请选择正确的状态'}
-                  ]
-              })(<Select className="Test-body-form-select">
+                  {required: true,message: '请选择正确的状态'},
+                  ],
+                validateTrigger:['onBlur']
+              })(<Select className="Test-body-form-select" allowClear>
                 <Select.Option value="启用">
                   启用
                 </Select.Option>
