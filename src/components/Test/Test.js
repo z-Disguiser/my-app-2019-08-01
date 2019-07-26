@@ -320,6 +320,9 @@ class X extends React.Component {
       });
     };
     dataMap(data||[]);
+    if(queryData.length===0){
+      console.log("该目录编码不存在")
+    }
     this.setState({queryData});
     this.props.form.resetFields();
   };
