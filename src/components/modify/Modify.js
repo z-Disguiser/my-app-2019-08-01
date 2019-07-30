@@ -1,5 +1,6 @@
 import React from 'react'
 import {List,Button,Drawer,Card,Form,Input,Popconfirm,message} from "antd";
+import './test.less'
 
 export default class  Modify extends React.Component{
     constructor(props){
@@ -92,7 +93,7 @@ export default class  Modify extends React.Component{
         const {information,type} = this.state;
         console.log(type,this.state.visible2);
         return(
-            <div>
+            <div id="Modify">
                 <List
                     header={<p style={{fontFamily:'楷体',fontWeight:'900',fontSize:'24px',textAlign:'center'}}>个人信息</p>}
                     footer={<Button onClick={()=>this.add()} type='primary'>添加</Button>}

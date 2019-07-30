@@ -9,6 +9,8 @@
     "echarts": "^4.2.1",
     "http-proxy-middleware": "^0.19.1",
     "jquery": "^3.4.1",
+    "less": "^3.9.0",
+    "less-loader": "^5.0.0",
     "react": "^16.8.6",
     "react-bootstrap": "^1.0.0-beta.9",
     "react-dom": "^16.8.6",
