@@ -1,4 +1,10 @@
-#Modify{
-  width: 500px;
-  height: 200px;
+@color:red;
+@dark-color:darken(@color,20%);
+#Modify button{
+  @media screen{
+    background-color: @color;
+    @media (min-width: 1000px){
+      background-color: @dark-color;
+    }
+  }
 }

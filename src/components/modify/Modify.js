@@ -1,6 +1,6 @@
 import React from 'react'
 import {List,Button,Drawer,Card,Form,Input,Popconfirm,message} from "antd";
-import './test.less'
+import './test2.css'
 
 export default class  Modify extends React.Component{
     constructor(props){
