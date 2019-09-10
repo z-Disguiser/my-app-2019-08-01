@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import {BrowserRouter} from "react-router-dom";
 import 'antd/dist/antd.css';
 import Head from './components/head/Head'
+import './test.css'
 
 
 ReactDOM.render(<BrowserRouter><Head/></BrowserRouter>, document.getElementById('root'));

@@ -116,7 +116,7 @@ export  default class Body extends React.Component{
     render() {
         return(
             <Content style={{width:this.state.issmall?'100%':'60%',backgroundColor:'#f6f6f6',transition:'width .8s'}}>
-                <div style={{position:'relative',border:'1px',boxShadow:'3px 3px 3px rgba(0,0,255,.2)'}}>
+                <div id="card1" style={{position:'relative',border:'1px',boxShadow:'3px 3px 3px rgba(0,0,255,.2)'}}>
                     <Breadcrumb style={{height:'48px',width:'100%',lineHeight:'50px',padding:'0 20px',fontFamily:'Monospace Number'}}>
                         <Breadcrumb.Item style={{fontSize:'18px'}}>仪表盘</Breadcrumb.Item>
                         <Breadcrumb.Item><Icon type='home'/></Breadcrumb.Item>
